@@ -7,17 +7,16 @@ import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
 
-public class Main {
+public class ClientForWait {
     public static void main(String[] args) {
         System.out.println("Hello world!");
         int port = 8080;
         try (ServerSocket serverSocket = new ServerSocket(port)) {
             while (true) {
-                try (Socket clientSocket = serverSocket.accept();) {
-                    // порт можете выбрать любой в доступном диапазоне 0-65536. Но чтобы не нарваться на уже занятый - рекомендуем использовать около 8080
-                     // ждем подключения
+                try (Socket clientSocket = serverSocket.accept();
                     PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true);
-                    BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+                    BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream())))
+                {
                     System.out.println("New connection accepted");
 
                     final String name = in.readLine();
